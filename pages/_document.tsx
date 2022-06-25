@@ -6,7 +6,7 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>My App</title>
+          <title>Formhub</title>
           <meta name="description" content="My App" />
           <link rel="icon" href="/favicon.ico" />
           <link
