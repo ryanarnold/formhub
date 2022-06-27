@@ -14,7 +14,9 @@ function PaperWithHeading({ children, heading }: Props) {
   return (
     <Paper variant="outlined">
       <Box padding={2}>
-        <Typography variant="h6">{heading}</Typography>
+        <Typography variant="h6" fontWeight="bold">
+          {heading}
+        </Typography>
       </Box>
 
       <Divider />
