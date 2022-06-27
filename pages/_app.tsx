@@ -17,6 +17,19 @@ const theme = createTheme({
       textTransform: 'none',
     },
   },
+  components: {
+    MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+      },
+      styleOverrides: {
+        contained: {
+          borderRadius: 10,
+          fontSize: 16,
+        },
+      },
+    },
+  },
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
