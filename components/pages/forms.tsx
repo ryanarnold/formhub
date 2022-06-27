@@ -12,7 +12,7 @@ import PaperWithHeading from '../paper-with-heading';
 function StartFormsPage() {
   return (
     <Container maxWidth="md">
-      <PaperWithHeading heading="Choose Forms">
+      <PaperWithHeading heading="Choose Forms" caption="Choose the forms you wish to fill out">
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <Typography variant="body1" fontWeight="bold">
@@ -64,7 +64,7 @@ function StartFormsPage() {
 
       <Box marginTop={2}>
         <Button variant="contained" href="/start/data" fullWidth>
-          Choose these forms
+          Fill out these forms
         </Button>
       </Box>
     </Container>

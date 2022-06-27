@@ -11,6 +11,9 @@ const theme = createTheme({
       dark: '#F72585',
       contrastText: '#fff',
     },
+    text: {
+      primary: '#414141',
+    },
   },
   typography: {
     button: {
