@@ -30,6 +30,10 @@ const theme = createTheme({
           borderRadius: 10,
           fontSize: 16,
         },
+        outlined: {
+          borderRadius: 10,
+          fontSize: 16,
+        },
       },
     },
   },

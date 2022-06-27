@@ -44,7 +44,7 @@ function StartDataPage({ formsToCreate }: Props) {
             </Grid>
           </Grid>
         </PaperWithHeading>
-        <Button variant="contained" href="/start/data" fullWidth>
+        <Button variant="contained" href="/start/summary" fullWidth>
           Submit
         </Button>
       </Stack>
