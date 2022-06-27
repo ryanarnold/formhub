@@ -15,7 +15,7 @@ import PaperWithHeading from '../paper-with-heading';
 
 function StartSummaryPage() {
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="sm">
       <Stack gap={3}>
         <PaperWithHeading heading="Summary">
           <Box>

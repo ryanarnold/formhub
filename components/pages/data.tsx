@@ -12,7 +12,7 @@ interface Props {
 
 function StartDataPage({ formsToCreate }: Props) {
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="sm">
       <Stack gap={3}>
         <PaperWithHeading heading="Personal Information">
           <Grid container spacing={2}>
