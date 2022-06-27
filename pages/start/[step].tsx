@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import StartDataPage from '../../components/pages/data';
+import StartDownloadPage from '../../components/pages/download';
 import StartFormsPage from '../../components/pages/forms';
 import StartSummaryPage from '../../components/pages/summary';
 
@@ -11,7 +12,8 @@ function StartSteps() {
 
   useEffect(() => {
     if (step === undefined) return;
-    if (step !== 'forms' && step !== 'data' && step !== 'summary') router.push('/start/forms');
+    if (step !== 'forms' && step !== 'data' && step !== 'summary' && step !== 'download')
+      router.push('/start/forms');
   }, [router.isReady]);
 
   if (step === 'forms') {
@@ -22,6 +24,9 @@ function StartSteps() {
   }
   if (step === 'summary') {
     return <StartSummaryPage />;
+  }
+  if (step === 'download') {
+    return <StartDownloadPage />;
   }
 }
 

@@ -38,7 +38,7 @@ function StartSummaryPage() {
             </Button>
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" fullWidth>
+            <Button variant="contained" href="/start/download" fullWidth>
               Generate Forms
             </Button>
           </Grid>
