@@ -11,7 +11,7 @@ interface Props {
 function StartDataPage({ formsToCreate }: Props) {
   return (
     <Container maxWidth="md">
-      <PaperWithHeading>
+      <PaperWithHeading heading="Personal Data">
         <div>
           <h1>Hello</h1>
         </div>

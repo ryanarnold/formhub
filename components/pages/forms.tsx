@@ -12,7 +12,7 @@ import PaperWithHeading from '../paper-with-heading';
 function StartFormsPage() {
   return (
     <Container maxWidth="md">
-      <PaperWithHeading>
+      <PaperWithHeading heading="Choose Forms">
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <Typography variant="body1" fontWeight="bold">

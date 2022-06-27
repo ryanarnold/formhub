@@ -7,13 +7,14 @@ import React from 'react';
 
 interface Props {
   children: ReactJSXElement;
+  heading: string;
 }
 
-function PaperWithHeading({ children }: Props) {
+function PaperWithHeading({ children, heading }: Props) {
   return (
     <Paper variant="outlined">
       <Box padding={2}>
-        <Typography variant="h6">Personal Data</Typography>
+        <Typography variant="h6">{heading}</Typography>
       </Box>
 
       <Divider />
