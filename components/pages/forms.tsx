@@ -70,7 +70,7 @@ function StartFormsPage() {
         </Box>
       </Paper>
       <Box marginTop={2}>
-        <Button variant="contained" fullWidth>
+        <Button variant="contained" href="/start/data" fullWidth>
           Choose these forms
         </Button>
       </Box>
