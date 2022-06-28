@@ -1,71 +1,33 @@
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import React from 'react';
-import Grid from '@mui/material/Grid';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import Stack from '@mui/material/Stack';
 import { Button } from '@mui/material';
+import Link from 'next/link';
 import PaperWithHeading from '../paper-with-heading';
+import { dummyForms } from '../../data/dummy/dummy-data';
+import FormSelection from '../form-selection';
 
 function StartFormsPage() {
+  const formCategories = Array.from(new Set(dummyForms.map((f) => f.category)));
+
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="sm">
       <PaperWithHeading heading="Choose Forms" caption="Choose the forms you wish to fill out">
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <Typography variant="body1" fontWeight="bold">
-              SSS
-            </Typography>
-            <FormGroup>
-              <FormControlLabel label="E-1 Form" control={<Checkbox />} />
-              <FormControlLabel label="E-4 Form" control={<Checkbox />} />
-            </FormGroup>
-            <Typography variant="body1" fontWeight="bold" marginTop={2}>
-              PhilHealth
-            </Typography>
-            <FormGroup>
-              <FormControlLabel label="Member Registration Form" control={<Checkbox />} />
-            </FormGroup>
-            <Typography variant="body1" fontWeight="bold" marginTop={2}>
-              Pag-Ibig
-            </Typography>
-            <FormGroup>
-              <FormControlLabel label="Member's Data Form" control={<Checkbox />} />
-            </FormGroup>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography variant="body1" fontWeight="bold">
-              BIR
-            </Typography>
-            <FormGroup>
-              <FormControlLabel label="Form 0605" control={<Checkbox />} />
-              <FormControlLabel label="Form 1901" control={<Checkbox />} />
-              <FormControlLabel label="Form 1905" control={<Checkbox />} />
-              <FormControlLabel label="Form 1701" control={<Checkbox />} />
-              <FormControlLabel label="Form 2551M" control={<Checkbox />} />
-            </FormGroup>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography variant="body1" fontWeight="bold">
-              BIR
-            </Typography>
-            <FormGroup>
-              <FormControlLabel label="Form 0605" control={<Checkbox />} />
-              <FormControlLabel label="Form 1901" control={<Checkbox />} />
-              <FormControlLabel label="Form 1905" control={<Checkbox />} />
-              <FormControlLabel label="Form 1701" control={<Checkbox />} />
-              <FormControlLabel label="Form 2551M" control={<Checkbox />} />
-            </FormGroup>
-          </Grid>
-        </Grid>
+        <Stack gap={2}>
+          {formCategories.map((category) => {
+            const filteredForms = dummyForms.filter((f) => f.category === category);
+            return <FormSelection key={category} category={category} forms={filteredForms} />;
+          })}
+        </Stack>
       </PaperWithHeading>
 
       <Box marginTop={2}>
-        <Button variant="contained" href="/start/data" fullWidth>
-          Fill out these forms
-        </Button>
+        <Link href="/start/data">
+          <Button variant="contained" fullWidth>
+            Fill out these forms
+          </Button>
+        </Link>
       </Box>
     </Container>
   );
