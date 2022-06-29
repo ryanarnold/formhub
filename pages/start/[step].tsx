@@ -31,7 +31,7 @@ function StartSteps() {
     return <StartFormsPage addFormCB={addToSelectedForms} removeFormCB={removeFromSelectedForms} />;
   }
   if (step === 'data') {
-    return <StartDataPage formsToCreate={['hello']} />;
+    return <StartDataPage selectedForms={selectedForms} />;
   }
   if (step === 'summary') {
     return <StartSummaryPage />;
