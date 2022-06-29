@@ -19,8 +19,6 @@ function StartDataPage({ selectedForms }: Props) {
     foreignAddress: false,
   };
 
-  console.log(selectedForms);
-
   selectedForms.forEach((f) => {
     if (f.fields.name) fieldsToShow.name = true;
     if (f.fields.address) fieldsToShow.address = true;
