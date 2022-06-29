@@ -32,7 +32,13 @@ function StartSteps() {
   };
 
   if (step === 'forms') {
-    return <StartFormsPage addFormCB={addToSelectedForms} removeFormCB={removeFromSelectedForms} />;
+    return (
+      <StartFormsPage
+        addFormCB={addToSelectedForms}
+        removeFormCB={removeFromSelectedForms}
+        selectedForms={selectedForms}
+      />
+    );
   }
 
   if (step === 'data') {

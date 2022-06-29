@@ -11,30 +11,52 @@ interface Props {
   forms: Array<Form>;
   addFormCB: (form: Form) => void;
   removeFormCB: (form: Form) => void;
+  selectedForms: Array<Form>;
 }
 
-function FormSelection({ category, forms, addFormCB, removeFormCB }: Props) {
+function FormSelection({ category, forms, addFormCB, removeFormCB, selectedForms }: Props) {
   return (
     <Stack gap={0}>
       <Typography variant="body1" fontWeight="bold">
         {category}
       </Typography>
       <FormGroup>
-        {forms.map((form) => (
-          <FormControlLabel
-            key={form.name}
-            label={form.name}
-            control={
-              <Checkbox
-                value={form.name}
-                onChange={(event) => {
-                  if (event.target.checked) addFormCB(form);
-                  else removeFormCB(form);
-                }}
-              />
+        {forms.map((form) => {
+          let isSelected = false;
+
+          selectedForms.forEach((f) => {
+            if (f.name === form.name && f.category === form.category) {
+              isSelected = true;
             }
-          />
-        ))}
+          });
+
+          return (
+            <FormControlLabel
+              key={form.name}
+              label={form.name}
+              control={
+                isSelected ? (
+                  <Checkbox
+                    value={form.name}
+                    onChange={(event) => {
+                      if (event.target.checked) addFormCB(form);
+                      else removeFormCB(form);
+                    }}
+                    checked
+                  />
+                ) : (
+                  <Checkbox
+                    value={form.name}
+                    onChange={(event) => {
+                      if (event.target.checked) addFormCB(form);
+                      else removeFormCB(form);
+                    }}
+                  />
+                )
+              }
+            />
+          );
+        })}
       </FormGroup>
     </Stack>
   );

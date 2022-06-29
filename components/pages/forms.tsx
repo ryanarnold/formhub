@@ -10,11 +10,12 @@ import FormSelection from '../form-selection';
 import { Form } from '../../data/form';
 
 interface Props {
+  selectedForms: Array<Form>;
   addFormCB: (form: Form) => void;
   removeFormCB: (form: Form) => void;
 }
 
-function StartFormsPage({ addFormCB, removeFormCB }: Props) {
+function StartFormsPage({ selectedForms, addFormCB, removeFormCB }: Props) {
   const formCategories = Array.from(new Set(dummyForms.map((f) => f.category)));
 
   return (
@@ -30,6 +31,7 @@ function StartFormsPage({ addFormCB, removeFormCB }: Props) {
                 forms={filteredForms}
                 addFormCB={addFormCB}
                 removeFormCB={removeFormCB}
+                selectedForms={selectedForms}
               />
             );
           })}
