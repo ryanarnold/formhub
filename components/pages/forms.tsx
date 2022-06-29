@@ -44,10 +44,16 @@ function StartFormsPage({ selectedForms, addFormCB, removeFormCB }: Props) {
       </PaperWithHeading>
 
       <Box marginTop={2}>
-        <Link href="/start/data">
-          <Button variant="contained" fullWidth>
-            Fill out these forms
-          </Button>
+        <Link href="/start/data" aria-disabled>
+          {selectedForms.length > 0 ? (
+            <Button variant="contained" fullWidth>
+              Fill out these forms
+            </Button>
+          ) : (
+            <Button variant="contained" disabled fullWidth>
+              Fill out these forms
+            </Button>
+          )}
         </Link>
       </Box>
     </Container>
