@@ -6,6 +6,8 @@ export interface IFields {
 }
 
 export class Form {
+  ref?: string;
+
   name: string;
 
   category: string;
@@ -16,6 +18,7 @@ export class Form {
     this.name = name;
     this.category = category;
     this.fields = fields;
+    this.ref = name + category;
   }
 }
 

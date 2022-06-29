@@ -28,7 +28,7 @@ function StartSteps() {
   };
 
   const removeFromSelectedForms = (form: Form) => {
-    setSelectedForms(selectedForms.filter((f) => f.name !== form.name));
+    setSelectedForms(selectedForms.filter((f) => f.ref !== form.ref));
   };
 
   if (step === 'forms') {
