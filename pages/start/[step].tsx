@@ -1,3 +1,4 @@
+import Container from '@mui/material/Container';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import StartDataPage from '../../components/pages/data';
@@ -42,7 +43,9 @@ function StartSteps() {
   }
 
   if (step === 'data') {
-    return <StartDataPage selectedForms={selectedForms} />;
+    return (
+        <StartDataPage selectedForms={selectedForms} />
+    );
   }
   if (step === 'summary') {
     return <StartSummaryPage selectedForms={selectedForms} />;

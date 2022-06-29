@@ -14,6 +14,7 @@ import Grid from '@mui/material/Grid';
 import Link from 'next/link';
 import PaperWithHeading from '../paper-with-heading';
 import { Form } from '../../data/form';
+import ProgressLine from '../progress-line';
 
 interface Props {
   selectedForms: Array<Form>;
@@ -22,6 +23,9 @@ interface Props {
 function StartSummaryPage({ selectedForms }: Props) {
   return (
     <Container maxWidth="sm">
+      <Box marginTop={3} marginBottom={3}>
+        <ProgressLine stage={3} />
+      </Box>
       <Stack gap={3}>
         <PaperWithHeading heading="Summary">
           <Box>

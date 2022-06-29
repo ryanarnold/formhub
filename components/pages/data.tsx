@@ -1,12 +1,14 @@
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import { Grid, Stack } from '@mui/material';
 import Link from 'next/link';
 import PaperWithHeading from '../paper-with-heading';
 import { Form, IFields } from '../../data/form';
+import ProgressLine from '../progress-line';
 
 interface Props {
   selectedForms: Array<Form>;
@@ -29,6 +31,9 @@ function StartDataPage({ selectedForms }: Props) {
 
   return (
     <Container maxWidth="sm">
+      <Box marginTop={3} marginBottom={3}>
+        <ProgressLine stage={2} />
+      </Box>
       <Stack gap={3} marginBottom={5}>
         {fieldsToShow.name ? (
           <PaperWithHeading heading="Name">

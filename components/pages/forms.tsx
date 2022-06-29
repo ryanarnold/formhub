@@ -4,10 +4,12 @@ import React from 'react';
 import Stack from '@mui/material/Stack';
 import { Button } from '@mui/material';
 import Link from 'next/link';
+import styled from '@emotion/styled';
 import PaperWithHeading from '../paper-with-heading';
 import { dummyForms } from '../../data/dummy/dummy-data';
 import FormSelection from '../form-selection';
 import { Form } from '../../data/form';
+import ProgressLine from '../progress-line';
 
 interface Props {
   selectedForms: Array<Form>;
@@ -20,6 +22,9 @@ function StartFormsPage({ selectedForms, addFormCB, removeFormCB }: Props) {
 
   return (
     <Container maxWidth="sm">
+      <Box marginTop={3} marginBottom={3}>
+        <ProgressLine stage={1} />
+      </Box>
       <PaperWithHeading heading="Choose Forms" caption="Choose the forms you wish to fill out">
         <Stack gap={2}>
           {formCategories.map((category) => {
