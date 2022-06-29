@@ -11,9 +11,15 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
+import Link from 'next/link';
 import PaperWithHeading from '../paper-with-heading';
+import { Form } from '../../data/form';
 
-function StartSummaryPage() {
+interface Props {
+  selectedForms: Array<Form>;
+}
+
+function StartSummaryPage({ selectedForms }: Props) {
   return (
     <Container maxWidth="sm">
       <Stack gap={3}>
@@ -21,12 +27,13 @@ function StartSummaryPage() {
           <Box>
             <Typography variant="body1">The following forms will be generated:</Typography>
             <FormGroup>
-              <FormControlLabel label="E-1 Form (SSS)" control={<Checkbox defaultChecked />} />
-              <FormControlLabel label="E-4 Form (SSS)" control={<Checkbox defaultChecked />} />
-              <FormControlLabel
-                label="Member Registration Form (PhilHealth)"
-                control={<Checkbox defaultChecked />}
-              />
+              {selectedForms.map((f) => (
+                <FormControlLabel
+                  key={f.name}
+                  label={`${f.name} (${f.category})`}
+                  control={<Checkbox defaultChecked />}
+                />
+              ))}
             </FormGroup>
           </Box>
         </PaperWithHeading>
@@ -38,9 +45,11 @@ function StartSummaryPage() {
             </Button>
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" href="/start/download" fullWidth>
-              Generate Forms
-            </Button>
+            <Link href="/start/download">
+              <Button variant="contained" fullWidth>
+                Generate Forms
+              </Button>
+            </Link>
           </Grid>
         </Grid>
       </Stack>

@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import { Grid, Stack } from '@mui/material';
+import Link from 'next/link';
 import PaperWithHeading from '../paper-with-heading';
 import { Form, IFields } from '../../data/form';
 
@@ -131,9 +132,11 @@ function StartDataPage({ selectedForms }: Props) {
           </PaperWithHeading>
         ) : null}
 
-        <Button variant="contained" href="/start/summary" fullWidth>
-          Submit
-        </Button>
+        <Link href="/start/summary">
+          <Button variant="contained" fullWidth>
+            Submit
+          </Button>
+        </Link>
       </Stack>
     </Container>
   );

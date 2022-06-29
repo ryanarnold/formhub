@@ -15,8 +15,12 @@ function StartSteps() {
 
   useEffect(() => {
     if (step === undefined) return;
-    if (step !== 'forms' && step !== 'data' && step !== 'summary' && step !== 'download')
+    if (step !== 'forms' && step !== 'data' && step !== 'summary' && step !== 'download') {
       router.push('/start/forms');
+    }
+    if (step !== 'forms' && selectedForms.length === 0) {
+      router.push('/start/forms');
+    }
   }, [router.isReady]);
 
   const addToSelectedForms = (form: Form) => {
@@ -30,14 +34,15 @@ function StartSteps() {
   if (step === 'forms') {
     return <StartFormsPage addFormCB={addToSelectedForms} removeFormCB={removeFromSelectedForms} />;
   }
+
   if (step === 'data') {
     return <StartDataPage selectedForms={selectedForms} />;
   }
   if (step === 'summary') {
-    return <StartSummaryPage />;
+    return <StartSummaryPage selectedForms={selectedForms} />;
   }
   if (step === 'download') {
-    return <StartDownloadPage />;
+    return <StartDownloadPage selectedForms={selectedForms} />;
   }
 }
 
