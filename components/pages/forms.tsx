@@ -7,8 +7,14 @@ import Link from 'next/link';
 import PaperWithHeading from '../paper-with-heading';
 import { dummyForms } from '../../data/dummy/dummy-data';
 import FormSelection from '../form-selection';
+import { Form } from '../../data/form';
 
-function StartFormsPage() {
+interface Props {
+  addFormCB: (form: Form) => void;
+  removeFormCB: (form: Form) => void;
+}
+
+function StartFormsPage({ addFormCB, removeFormCB }: Props) {
   const formCategories = Array.from(new Set(dummyForms.map((f) => f.category)));
 
   return (
@@ -17,7 +23,15 @@ function StartFormsPage() {
         <Stack gap={2}>
           {formCategories.map((category) => {
             const filteredForms = dummyForms.filter((f) => f.category === category);
-            return <FormSelection key={category} category={category} forms={filteredForms} />;
+            return (
+              <FormSelection
+                key={category}
+                category={category}
+                forms={filteredForms}
+                addFormCB={addFormCB}
+                removeFormCB={removeFormCB}
+              />
+            );
           })}
         </Stack>
       </PaperWithHeading>
