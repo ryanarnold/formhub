@@ -6,9 +6,11 @@ import StartDownloadPage from '../../components/pages/download';
 import StartFormsPage from '../../components/pages/forms';
 import StartSummaryPage from '../../components/pages/summary';
 import { Form } from '../../data/form';
+import { UserData } from '../../data/user-data';
 
 function StartSteps() {
   const [selectedForms, setSelectedForms] = useState<Array<Form>>([]);
+  const [userData, setUserData] = useState<UserData>(new UserData());
 
   const router = useRouter();
 
@@ -32,6 +34,10 @@ function StartSteps() {
     setSelectedForms(selectedForms.filter((f) => f.ref !== form.ref));
   };
 
+  const updateUserData = (newUserData: UserData) => {
+    setUserData(newUserData);
+  };
+
   if (step === 'forms') {
     return (
       <StartFormsPage
@@ -43,9 +49,7 @@ function StartSteps() {
   }
 
   if (step === 'data') {
-    return (
-        <StartDataPage selectedForms={selectedForms} />
-    );
+    return <StartDataPage selectedForms={selectedForms} updateUserDataCB={updateUserData} />;
   }
   if (step === 'summary') {
     return <StartSummaryPage selectedForms={selectedForms} />;

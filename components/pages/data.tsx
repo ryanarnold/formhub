@@ -2,19 +2,25 @@ import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import { Grid, Stack } from '@mui/material';
 import Link from 'next/link';
+import { Router } from '@mui/icons-material';
+import { useRouter } from 'next/router';
 import PaperWithHeading from '../paper-with-heading';
 import { Form, IFields } from '../../data/form';
 import ProgressLine from '../progress-line';
+import { UserData } from '../../data/user-data';
 
 interface Props {
   selectedForms: Array<Form>;
+  updateUserDataCB: (data: UserData) => void;
 }
 
-function StartDataPage({ selectedForms }: Props) {
+function StartDataPage({ selectedForms, updateUserDataCB }: Props) {
+  const router = useRouter();
+
   const fieldsToShow: IFields = {
     name: false,
     address: false,
@@ -29,6 +35,22 @@ function StartDataPage({ selectedForms }: Props) {
     if (f.fields.foreignAddress) fieldsToShow.foreignAddress = true;
   });
 
+  const updateData = (event: React.MouseEvent) => {
+    const userData = new UserData();
+    const fields = Object.getOwnPropertyNames(userData);
+
+    fields.forEach((field) => {
+      const value = (document.getElementById(field) as HTMLInputElement)?.value;
+
+      if (value) {
+        (userData as any)[field] = value;
+      }
+    });
+
+    updateUserDataCB(userData);
+    router.push('/start/summary');
+  };
+
   return (
     <Container maxWidth="sm">
       <Box marginTop={3} marginBottom={3}>
@@ -38,14 +60,32 @@ function StartDataPage({ selectedForms }: Props) {
         {fieldsToShow.name ? (
           <PaperWithHeading heading="Name">
             <Stack gap={2}>
-              <TextField label="First Name" variant="outlined" size="small" fullWidth />
-              <TextField label="Middle Name" variant="outlined" size="small" fullWidth />
+              <TextField
+                label="First Name"
+                id="firstName"
+                variant="outlined"
+                size="small"
+                fullWidth
+              />
+              <TextField
+                label="Middle Name"
+                id="middleName"
+                variant="outlined"
+                size="small"
+                fullWidth
+              />
               <Grid container spacing={2}>
                 <Grid item xs={9}>
-                  <TextField label="Last Name" variant="outlined" size="small" fullWidth />
+                  <TextField
+                    label="Last Name"
+                    id="lastName"
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                  />
                 </Grid>
                 <Grid item xs={3}>
-                  <TextField label="Suffix" variant="outlined" size="small" fullWidth />
+                  <TextField label="Suffix" id="suffix" variant="outlined" size="small" fullWidth />
                 </Grid>
               </Grid>
             </Stack>
@@ -137,11 +177,9 @@ function StartDataPage({ selectedForms }: Props) {
           </PaperWithHeading>
         ) : null}
 
-        <Link href="/start/summary">
-          <Button variant="contained" fullWidth>
-            Submit
-          </Button>
-        </Link>
+        <Button variant="contained" onClick={updateData} fullWidth>
+          Submit
+        </Button>
       </Stack>
     </Container>
   );
