@@ -5,6 +5,11 @@ export interface IFields {
   foreignAddress: boolean;
 }
 
+export interface IJotformMapping {
+  field: string;
+  index: number;
+}
+
 export class Form {
   ref?: string;
 
@@ -14,11 +19,23 @@ export class Form {
 
   fields: IFields;
 
-  constructor(name: string, category: string, fields: IFields) {
+  jotformId: string;
+
+  mappings: Array<IJotformMapping>;
+
+  constructor(
+    name: string,
+    category: string,
+    fields: IFields,
+    jotformId: string,
+    mappings: Array<IJotformMapping>
+  ) {
     this.name = name;
     this.category = category;
     this.fields = fields;
     this.ref = name + category;
+    this.jotformId = jotformId;
+    this.mappings = mappings;
   }
 }
 

@@ -1,26 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItemText from '@mui/material/ListItemText';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
+import LoadingButton from '@mui/lab/LoadingButton';
 import PaperWithHeading from '../paper-with-heading';
 import { Form } from '../../data/form';
 import ProgressLine from '../progress-line';
+import { UserData } from '../../data/user-data';
+import { submitJotforms } from '../../common/jotforms';
 
 interface Props {
   selectedForms: Array<Form>;
+  userData: UserData;
 }
 
-function StartSummaryPage({ selectedForms }: Props) {
+function StartSummaryPage({ selectedForms, userData }: Props) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const router = useRouter();
+
+  const generateForms = async () => {
+    setIsLoading(true);
+    submitJotforms(userData, selectedForms).then(() => {
+      router.push('/start/download');
+      setIsLoading(false);
+    });
+  };
+
   return (
     <Container maxWidth="sm">
       <Box marginTop={3} marginBottom={3}>
@@ -49,11 +62,21 @@ function StartSummaryPage({ selectedForms }: Props) {
             </Button>
           </Grid>
           <Grid item xs={6}>
-            <Link href="/start/download">
-              <Button variant="contained" fullWidth>
+            {isLoading ? (
+              <LoadingButton
+                variant="contained"
+                onClick={generateForms}
+                loadingIndicator="Please wait..."
+                loading
+                fullWidth
+              >
                 Generate Forms
-              </Button>
-            </Link>
+              </LoadingButton>
+            ) : (
+              <LoadingButton variant="contained" onClick={generateForms} fullWidth>
+                Generate Forms
+              </LoadingButton>
+            )}
           </Grid>
         </Grid>
       </Stack>

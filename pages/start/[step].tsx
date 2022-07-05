@@ -52,7 +52,7 @@ function StartSteps() {
     return <StartDataPage selectedForms={selectedForms} updateUserDataCB={updateUserData} />;
   }
   if (step === 'summary') {
-    return <StartSummaryPage selectedForms={selectedForms} />;
+    return <StartSummaryPage selectedForms={selectedForms} userData={userData} />;
   }
   if (step === 'download') {
     return <StartDownloadPage selectedForms={selectedForms} />;
