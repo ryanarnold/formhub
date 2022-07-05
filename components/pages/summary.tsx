@@ -10,11 +10,11 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import { useRouter } from 'next/router';
 import LoadingButton from '@mui/lab/LoadingButton';
+import axios from 'axios';
 import PaperWithHeading from '../paper-with-heading';
 import { Form } from '../../data/form';
 import ProgressLine from '../progress-line';
 import { UserData } from '../../data/user-data';
-import { submitJotforms } from '../../common/jotforms';
 
 interface Props {
   selectedForms: Array<Form>;
@@ -28,7 +28,17 @@ function StartSummaryPage({ selectedForms, userData }: Props) {
 
   const generateForms = async () => {
     setIsLoading(true);
-    submitJotforms(userData, selectedForms).then(() => {
+
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    const data = {
+      user_data: userData,
+      selected_forms: selectedForms,
+    };
+
+    axios.post('/api/jotform/submit', data, { headers }).then((response) => {
       router.push('/start/download');
       setIsLoading(false);
     });
