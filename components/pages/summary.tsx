@@ -15,13 +15,15 @@ import PaperWithHeading from '../paper-with-heading';
 import { Form } from '../../data/form';
 import ProgressLine from '../progress-line';
 import { UserData } from '../../data/user-data';
+import { UserForm } from '../../data/user-form';
 
 interface Props {
   selectedForms: Array<Form>;
   userData: UserData;
+  updateUserFormsCB: (userForms: Array<UserForm>) => void;
 }
 
-function StartSummaryPage({ selectedForms, userData }: Props) {
+function StartSummaryPage({ selectedForms, userData, updateUserFormsCB }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const router = useRouter();
@@ -39,6 +41,7 @@ function StartSummaryPage({ selectedForms, userData }: Props) {
     };
 
     axios.post('/api/jotform/submit', data, { headers }).then((response) => {
+      updateUserFormsCB(response.data.user_forms);
       router.push('/start/download');
       setIsLoading(false);
     });

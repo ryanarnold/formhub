@@ -8,8 +8,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const userData: UserData = req.body.user_data;
     const selectedForms: Array<Form> = req.body.selected_forms;
 
-    submitJotforms(userData, selectedForms).finally(() => {
-      res.status(200).json({ success: true });
+    submitJotforms(userData, selectedForms).then((userForms) => {
+      res.status(200).json({ user_forms: userForms });
     });
   }
 }

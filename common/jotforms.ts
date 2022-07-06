@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Form } from '../data/form';
 import { UserData } from '../data/user-data';
+import { UserForm } from '../data/user-form';
 
 const API_KEY = 'cc46b6111c12e32f0e8e0ff6cb37d465';
 
@@ -31,6 +32,8 @@ export function jotify(userData: UserData, form: Form): any {
 }
 
 export async function submitJotforms(userData: UserData, forms: Array<Form>) {
+  const userForms: Array<UserForm> = [];
+
   await Promise.all(
     forms.map(async (form) => {
       const formData = jotify(userData, form);
@@ -48,10 +51,16 @@ export async function submitJotforms(userData: UserData, forms: Array<Form>) {
       }
 
       if (response?.status === 200) {
-        console.log(response?.data);
+        userForms.push(new UserForm(response?.data.content.submissionID, form));
       }
     })
   );
+
+  return userForms;
+}
+
+export function getDownloadLink(userForm: UserForm) {
+  return `https://api.jotform.com/pdf-converter/${userForm.form.jotformId}/fill-pdf?download=1&submissionID=${userForm.submissionId}&apikey=${API_KEY}`;
 }
 
 export default {};

@@ -1,4 +1,3 @@
-import Container from '@mui/material/Container';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import StartDataPage from '../../components/pages/data';
@@ -7,10 +6,12 @@ import StartFormsPage from '../../components/pages/forms';
 import StartSummaryPage from '../../components/pages/summary';
 import { Form } from '../../data/form';
 import { UserData } from '../../data/user-data';
+import { UserForm } from '../../data/user-form';
 
 function StartSteps() {
   const [selectedForms, setSelectedForms] = useState<Array<Form>>([]);
   const [userData, setUserData] = useState<UserData>(new UserData());
+  const [userForms, setUserForms] = useState<Array<UserForm>>([]);
 
   const router = useRouter();
 
@@ -52,10 +53,16 @@ function StartSteps() {
     return <StartDataPage selectedForms={selectedForms} updateUserDataCB={updateUserData} />;
   }
   if (step === 'summary') {
-    return <StartSummaryPage selectedForms={selectedForms} userData={userData} />;
+    return (
+      <StartSummaryPage
+        selectedForms={selectedForms}
+        userData={userData}
+        updateUserFormsCB={setUserForms}
+      />
+    );
   }
   if (step === 'download') {
-    return <StartDownloadPage selectedForms={selectedForms} />;
+    return <StartDownloadPage userForms={userForms} />;
   }
 }
 
