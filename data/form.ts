@@ -29,7 +29,7 @@ export class Form {
 
   fields: IFields;
 
-  jotformId: string;
+  id: string;
 
   mappings: Array<IJotformMapping>;
 
@@ -37,14 +37,14 @@ export class Form {
     name: string,
     category: string,
     fields: IFields,
-    jotformId: string,
+    id: string,
     mappings: Array<IJotformMapping>
   ) {
     this.name = name;
     this.category = category;
     this.fields = fields;
     this.ref = name + category;
-    this.jotformId = jotformId;
+    this.id = id;
     this.mappings = mappings;
   }
 }

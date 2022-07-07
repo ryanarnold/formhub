@@ -11,11 +11,13 @@ import Grid from '@mui/material/Grid';
 import { useRouter } from 'next/router';
 import LoadingButton from '@mui/lab/LoadingButton';
 import axios from 'axios';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import PaperWithHeading from '../paper-with-heading';
 import { Form } from '../../data/form';
 import ProgressLine from '../progress-line';
 import { UserData } from '../../data/user-data';
 import { UserForm } from '../../data/user-form';
+import initializeFirebase from '../../common/firebase-utils';
 
 interface Props {
   selectedForms: Array<Form>;
@@ -37,12 +39,29 @@ function StartSummaryPage({ selectedForms, userData, updateUserFormsCB }: Props)
 
     const data = {
       user_data: userData,
-      selected_forms: selectedForms,
+      forms: selectedForms.map((form) => form.id),
     };
 
-    axios.post('/api/jotform/submit', data, { headers }).then((response) => {
-      updateUserFormsCB(response.data.user_forms);
-      router.push('/start/download');
+    // axios.post('/api/jotform/submit', data, { headers }).then((response) => {
+    //   updateUserFormsCB(response.data.user_forms);
+    //   router.push('/start/download');
+    //   setIsLoading(false);
+    // });
+
+    initializeFirebase();
+
+    axios.post('http://127.0.0.1:5000/submission', data).then((response) => {
+      const links = Array.from(response.data.links);
+      links.forEach((link) => {
+        axios.get(`http://127.0.0.1:5000${link}`, { responseType: 'blob' }).then((pdfResponse) => {
+          const blob = new Blob([pdfResponse.data]);
+          const storage = getStorage();
+
+          const fileRef = ref(storage, 'test.pdf');
+
+          uploadBytes(fileRef, blob);
+        });
+      });
       setIsLoading(false);
     });
   };
