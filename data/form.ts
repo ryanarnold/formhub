@@ -1,8 +1,18 @@
 export interface IFields {
   name: boolean;
+  motherName: boolean;
+  spouseName: boolean;
+  birth: boolean;
+  sex: boolean;
+  civilStatus: boolean;
+  citizenship: boolean;
   address: boolean;
+  mailingAddress: boolean;
   contact: boolean;
-  foreignAddress: boolean;
+  foreignAddress: false;
+  philHealthMemberType: boolean;
+  monthlyIncome: boolean;
+  proofOfIncome: boolean;
 }
 
 export interface IJotformMapping {

@@ -7,10 +7,60 @@ export class UserData {
 
   lastName: string;
 
-  constructor(firstName?: string, middleName?: string, lastName?: string, ref?: string) {
-    this.firstName = firstName ?? '';
-    this.middleName = middleName ?? '';
-    this.lastName = lastName ?? '';
+  suffix: string;
+
+  mobileNumber: string;
+
+  telephoneNumber: string;
+
+  emailAddress: string;
+
+  addressRoom: string;
+
+  addressHouse: string;
+
+  addressStreetName: string;
+
+  addressSubdivision: string;
+
+  addressBarangay: string;
+
+  addressCity: string;
+
+  addressProvince: string;
+
+  addressZipCode: string;
+
+  constructor() {
+    this.firstName = '';
+
+    this.middleName = '';
+
+    this.lastName = '';
+
+    this.suffix = '';
+
+    this.mobileNumber = '';
+
+    this.telephoneNumber = '';
+
+    this.emailAddress = '';
+
+    this.addressRoom = '';
+
+    this.addressHouse = '';
+
+    this.addressStreetName = '';
+
+    this.addressSubdivision = '';
+
+    this.addressBarangay = '';
+
+    this.addressCity = '';
+
+    this.addressProvince = '';
+
+    this.addressZipCode = '';
   }
 }
 
