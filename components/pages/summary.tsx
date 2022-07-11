@@ -12,12 +12,13 @@ import { useRouter } from 'next/router';
 import LoadingButton from '@mui/lab/LoadingButton';
 import axios from 'axios';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { DocumentReference } from 'firebase/firestore';
 import PaperWithHeading from '../paper-with-heading';
 import { Form } from '../../data/form';
 import ProgressLine from '../progress-line';
 import { UserData } from '../../data/user-data';
 import { UserForm } from '../../data/user-form';
-import initializeFirebase from '../../common/firebase-utils';
+import initializeFirebase, { getStorageLink, uploadFile } from '../../common/firebase-utils';
 
 interface Props {
   selectedForms: Array<Form>;
@@ -33,36 +34,46 @@ function StartSummaryPage({ selectedForms, userData, updateUserFormsCB }: Props)
   const generateForms = async () => {
     setIsLoading(true);
 
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-
     const data = {
       user_data: userData,
-      forms: selectedForms.map((form) => form.id),
+      forms: selectedForms.map((form) => form.ref?.id),
     };
 
-    // axios.post('/api/jotform/submit', data, { headers }).then((response) => {
-    //   updateUserFormsCB(response.data.user_forms);
-    //   router.push('/start/download');
-    //   setIsLoading(false);
-    // });
+    const userForms: Array<UserForm> = [];
 
     initializeFirebase();
 
-    axios.post('http://127.0.0.1:5000/submission', data).then((response) => {
-      const links = Array.from(response.data.links);
-      links.forEach((link) => {
-        axios.get(`http://127.0.0.1:5000${link}`, { responseType: 'blob' }).then((pdfResponse) => {
-          const blob = new Blob([pdfResponse.data]);
-          const storage = getStorage();
+    axios.post('http://127.0.0.1:5000/submission', data).then(async (response) => {
+      await userData.create();
 
-          const fileRef = ref(storage, 'test.pdf');
+      const generatedForms = Array.from(response.data.generated_forms);
+      await Promise.all(
+        generatedForms.map(async (generatedForm: any) => {
+          await axios
+            .get(`http://127.0.0.1:5000${generatedForm.link}`, { responseType: 'blob' })
+            .then(async (pdfResponse) => {
+              const currentForm = selectedForms.find((form) => form.ref?.id === generatedForm.id);
 
-          uploadBytes(fileRef, blob);
-        });
+              if (currentForm) {
+                const userForm = new UserForm('', currentForm.ref as DocumentReference);
+                await userForm.create();
+
+                const blob = new Blob([pdfResponse.data]);
+                const filename = `${userForm.ref?.id}.pdf`;
+                const link = await uploadFile(blob, filename);
+
+                userForm.link = link;
+                await userForm.update();
+
+                userForms.push(userForm);
+              }
+            });
+        })
+      ).finally(() => {
+        updateUserFormsCB(userForms);
+        setIsLoading(false);
+        router.push('/start/download');
       });
-      setIsLoading(false);
     });
   };
 

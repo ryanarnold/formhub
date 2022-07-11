@@ -12,7 +12,7 @@ import TableCell from '@mui/material/TableCell';
 import Paper from '@mui/material/Paper';
 import TableBody from '@mui/material/TableBody';
 import styled from '@emotion/styled';
-import { UserForm } from '../../data/user-form';
+import userForm, { UserForm } from '../../data/user-form';
 import { getDownloadLink } from '../../common/jotforms';
 
 const DownloadButton = styled(Button)`
@@ -24,6 +24,8 @@ interface Props {
 }
 
 function StartDownloadPage({ userForms }: Props) {
+  const tableJsx = [];
+
   return (
     <Container maxWidth="sm">
       <Stack gap={3} marginTop={4}>
@@ -43,12 +45,12 @@ function StartDownloadPage({ userForms }: Props) {
             </TableHead>
             <TableBody>
               {userForms.map((f) => (
-                <TableRow key={f.form.name}>
+                <TableRow key={f.formRef.id}>
                   <TableCell component="th" scope="row">
-                    {`${f.form.name} (${f.form.category})`}
+                    {`${f.formRef.id} (${f.formRef.id})`}
                   </TableCell>
                   <TableCell align="right">
-                    <DownloadButton href={getDownloadLink(f)} size="small">
+                    <DownloadButton href={f.link} size="small">
                       Download
                     </DownloadButton>
                   </TableCell>

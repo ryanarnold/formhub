@@ -1,4 +1,6 @@
 import { FirebaseApp, initializeApp } from 'firebase/app';
+import { Firestore, getFirestore } from 'firebase/firestore';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 export default function initializeFirebase(): FirebaseApp {
   const firebaseConfig = {
@@ -12,4 +14,20 @@ export default function initializeFirebase(): FirebaseApp {
 
   // Initialize Firebase
   return initializeApp(firebaseConfig);
+}
+
+export function initializeDatabase(): Firestore {
+  const app = initializeFirebase();
+  return getFirestore(app);
+}
+
+export const db = initializeDatabase();
+
+export async function uploadFile(file: Blob, filename: string) {
+  const storage = getStorage();
+  const fileRef = ref(storage, filename);
+
+  await uploadBytes(fileRef, file);
+  const url = await getDownloadURL(fileRef);
+  return url;
 }

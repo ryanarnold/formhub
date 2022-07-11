@@ -2,11 +2,9 @@ import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import { Grid, Stack } from '@mui/material';
-import Link from 'next/link';
-import { Router } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import PaperWithHeading from '../paper-with-heading';
 import { Form, IFields } from '../../data/form';
@@ -23,28 +21,17 @@ function StartDataPage({ selectedForms, updateUserDataCB }: Props) {
 
   const fieldsToShow: IFields = {
     name: false,
-    motherName: false,
-    spouseName: false,
-    birth: false,
-    sex: false,
-    civilStatus: false,
-    citizenship: false,
     address: false,
-    mailingAddress: false,
     contact: false,
-    foreignAddress: false,
-    philHealthMemberType: false,
-    monthlyIncome: false,
-    proofOfIncome: false,
   };
 
   selectedForms.forEach((f) => {
-    if (f.fields.name) fieldsToShow.name = true;
-    if (f.fields.address) fieldsToShow.address = true;
-    if (f.fields.contact) fieldsToShow.contact = true;
+    if (f.fieldGroup.name) fieldsToShow.name = true;
+    if (f.fieldGroup.address) fieldsToShow.address = true;
+    if (f.fieldGroup.contact) fieldsToShow.contact = true;
   });
 
-  const updateData = (event: React.MouseEvent) => {
+  const updateData = () => {
     const userData = new UserData();
     const fields = Object.getOwnPropertyNames(userData);
 
@@ -161,7 +148,7 @@ function StartDataPage({ selectedForms, updateUserDataCB }: Props) {
               <Grid item xs={12}>
                 <TextField
                   label="Street Name"
-                  id="addressStreetName"
+                  id="addressStreet"
                   variant="outlined"
                   size="small"
                   fullWidth
@@ -211,22 +198,6 @@ function StartDataPage({ selectedForms, updateUserDataCB }: Props) {
                   size="small"
                   fullWidth
                 />
-              </Grid>
-            </Grid>
-          </PaperWithHeading>
-        ) : null}
-
-        {fieldsToShow.foreignAddress ? (
-          <PaperWithHeading heading="Foreign Address">
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField label="Foreign Address" variant="outlined" size="small" fullWidth />
-              </Grid>
-              <Grid item xs={9}>
-                <TextField label="Country" variant="outlined" size="small" fullWidth />
-              </Grid>
-              <Grid item xs={3}>
-                <TextField label="ZIP Code" variant="outlined" size="small" fullWidth />
               </Grid>
             </Grid>
           </PaperWithHeading>

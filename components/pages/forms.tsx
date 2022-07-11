@@ -1,12 +1,10 @@
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import { Button } from '@mui/material';
 import Link from 'next/link';
-import styled from '@emotion/styled';
 import PaperWithHeading from '../paper-with-heading';
-import { dummyForms } from '../../data/dummy/dummy-data';
 import FormSelection from '../form-selection';
 import { Form } from '../../data/form';
 import ProgressLine from '../progress-line';
@@ -18,7 +16,15 @@ interface Props {
 }
 
 function StartFormsPage({ selectedForms, addFormCB, removeFormCB }: Props) {
-  const formCategories = Array.from(new Set(dummyForms.map((f) => f.category)));
+  const [formCategories, setFormCategories] = useState<Array<string>>([]);
+  const [allForms, setAllForms] = useState<Array<Form>>([]);
+
+  useEffect(() => {
+    Form.findAll().then((forms) => {
+      setAllForms(forms);
+      setFormCategories(Array.from(new Set(forms.map((f) => f.category))));
+    });
+  }, []);
 
   return (
     <Container maxWidth="sm">
@@ -28,7 +34,7 @@ function StartFormsPage({ selectedForms, addFormCB, removeFormCB }: Props) {
       <PaperWithHeading heading="Choose Forms" caption="Choose the forms you wish to fill out">
         <Stack gap={2}>
           {formCategories.map((category) => {
-            const filteredForms = dummyForms.filter((f) => f.category === category);
+            const filteredForms = allForms.filter((f) => f.category === category);
             return (
               <FormSelection
                 key={category}
