@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -14,6 +14,7 @@ import TableBody from '@mui/material/TableBody';
 import styled from '@emotion/styled';
 import userForm, { UserForm } from '../../data/user-form';
 import { getDownloadLink } from '../../common/jotforms';
+import { Form } from '../../data/form';
 
 const DownloadButton = styled(Button)`
   font-size: small;
@@ -23,8 +24,32 @@ interface Props {
   userForms: Array<UserForm>;
 }
 
+interface FormDownload {
+  name: string;
+  category: string;
+  link: string;
+}
+
 function StartDownloadPage({ userForms }: Props) {
-  const tableJsx = [];
+  const [formDownloads, setFormDownloads] = useState<Array<FormDownload>>([]);
+  const list: Array<FormDownload> = [];
+
+  useEffect(() => {
+    Promise.all(
+      userForms.map(async (uf) => {
+        const form = await Form.findByRef(uf.formRef.id);
+
+        const formDownload: FormDownload = {
+          name: form.name,
+          category: form.category,
+          link: uf.link,
+        };
+        list.push(formDownload);
+      })
+    ).then(() => {
+      setFormDownloads(list);
+    });
+  }, []);
 
   return (
     <Container maxWidth="sm">
@@ -44,10 +69,10 @@ function StartDownloadPage({ userForms }: Props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {userForms.map((f) => (
-                <TableRow key={f.formRef.id}>
+              {formDownloads.map((f) => (
+                <TableRow key={f.name}>
                   <TableCell component="th" scope="row">
-                    {`${f.formRef.id} (${f.formRef.id})`}
+                    {`${f.name} (${f.category})`}
                   </TableCell>
                   <TableCell align="right">
                     <DownloadButton href={f.link} size="small">
